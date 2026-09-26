@@ -1,0 +1,219 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: Arial, sans-serif;
+    background: #080a12;
+    color: white;
+}
+
+/* CONTAINER */
+.members-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 0;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 20px;
+
+    color: #a5adff;
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    background: rgba(88, 101, 242, 0.08);
+    border: 1px solid rgba(88, 101, 242, 0.25);
+    border-radius: 12px;
+
+    box-shadow: 0 0 15px rgba(88, 101, 242, 0.04);
+
+    transition: all 0.3s ease;
+}
+
+
+/* PANAH KEMBALI */
+
+.back-btn::before {
+    content: "←";
+
+    font-size: 18px;
+    line-height: 1;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* HOVER EFFECT */
+
+.back-btn:hover {
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        rgba(88, 101, 242, 0.25),
+        rgba(139, 92, 246, 0.18)
+    );
+
+    border-color: rgba(139, 146, 255, 0.65);
+
+    box-shadow:
+        0 0 20px rgba(88, 101, 242, 0.18),
+        inset 0 0 12px rgba(88, 101, 242, 0.05);
+
+    transform: translateY(-3px);
+}
+
+
+/* ANIMASI PANAH */
+
+.back-btn:hover::before {
+    transform: translateX(-5px);
+}
+
+
+/* CLICK EFFECT */
+
+.back-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+/* JUDUL */
+.page-heading {
+    text-align: center;
+    margin: 60px 0 45px;
+}
+
+.page-heading span {
+    color: #5865f2;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.page-heading h1 {
+    font-size: 42px;
+    margin: 15px 0;
+}
+
+.page-heading p {
+    color: #888;
+    font-size: 14px;
+}
+
+/* GRID MEMBER */
+.all-members-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+/* KARTU MEMBER */
+.all-member-card {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+
+    padding: 30px 20px;
+
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 20px;
+
+    transition: .3s;
+
+    animation: fadeUp .6s ease both;
+}
+
+/* HOVER */
+.all-member-card:hover {
+    transform: translateY(-8px);
+    border-color: #5865f2;
+
+    background: rgba(88,101,242,.06);
+
+    box-shadow: 0 10px 35px rgba(88,101,242,.12);
+}
+
+/* FOTO MEMBER */
+.all-member-card img {
+    width: 100px;
+    height: 100px;
+
+    object-fit: cover;
+    border-radius: 50%;
+
+    border: 3px solid #5865f2;
+    margin-bottom: 18px;
+}
+
+/* NAMA */
+.all-member-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* ROLE */
+.all-member-card p {
+    color: #888;
+    font-size: 12px;
+}
+
+/* LINK PROFIL */
+.all-member-card .view-profile {
+    display: inline-block;
+    margin-top: 18px;
+
+    color: #7c8cff;
+    font-size: 12px;
+}
+
+/* ANIMASI */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+    .all-members-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* HP */
+@media (max-width: 600px) {
+    .all-members-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .all-member-card {
+        padding: 20px 10px;
+    }
+
+    .page-heading h1 {
+        font-size: 32px;
+    }
+}

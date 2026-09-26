@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Community — Official Discord Community Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#080a12',
+                        cardbg: '#0f1424',
+                        cardhover: '#161d36',
+                        discord: '#5865f2',
+                        discordhover: '#4752c4',
+                        accentpurple: '#8b5cf6',
+                        accentcyan: '#06b6d4',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Poppins', 'sans-serif'],
+                        heading: ['Poppins', 'Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 25px rgba(88, 101, 242, 0.45)',
+                        'neon-purple': '0 0 25px rgba(139, 92, 246, 0.45)',
+                        'neon-glow': '0 0 35px rgba(88, 101, 242, 0.3), 0 0 15px rgba(139, 92, 246, 0.3)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.05)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 5s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        marquee: 'marquee 25s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS Styles -->
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080a12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5865f2;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(15, 20, 36, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(8, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-discord {
+            background: linear-gradient(135deg, #5865f2 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Border Gradient */
+        .border-gradient {
+            border: 1px solid transparent;
+            background-image: linear-gradient(#0f1424, #0f1424), linear-gradient(135deg, #5865f2, #8b5cf6);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .border-gradient-glow:hover {
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.35);
+        }
+
+        /* Member Marquee Pause on Hover */
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        /* Custom Glow Orbs */
+        .glow-bg-1 {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(88,101,242,0.25) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+        
+        .glow-bg-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(50px);
+            pointer-events: none;
+        }
+
+        /* SVG Line Glow */
+        .connector-line {
+            stroke-dasharray: 8 4;
+            animation: dash 30s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-darkbg text-slate-200 font-sans antialiased overflow-x-hidden selection:bg-discord selection:text-white">
+
+    <!-- NAVBAR -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-discord to-accentpurple p-0.5 shadow-neon-blue transition-transform duration-300 group-hover:scale-105">
+                        <div class="w-full h-full bg-darkbg rounded-[10px] flex items-center justify-center">
+                            <i class="fa-brands fa-discord text-xl text-discord group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-heading font-extrabold text-xl tracking-wider text-white">DC <span class="text-discord">COMMUNITY</span></span>
+                        <span class="text-[10px] text-slate-400 font-medium tracking-widest uppercase -mt-1">Gaming & Social Hub</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="#home" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Home</a>
+                    <a href="#about" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">About</a>
+                    <a href="#members" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Members</a>
+                    <a href="#games" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Games</a>
+                    <a href="#events" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Events</a>
+                    <a href="#gallery" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Gallery</a>
+                    <a href="#timeline" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">Achievements</a>
+                </nav>
+
+                <!-- Right Action Button -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="#join" class="relative group overflow-hidden px-5 py-2.5 rounded-xl font-semibold text-sm text-white shadow-neon-blue transition-all duration-300 hover:shadow-neon-purple active:scale-95">
+                        <div class="absolute inset-0 bg-gradient-to-r from-discord via-indigo-600 to-accentpurple transition-all duration-300 group-hover:scale-105"></div>
+                        <span class="relative flex items-center gap-2">
+                            <i class="fa-brands fa-discord text-base"></i> Join Discord
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 border border-white/10 focus:outline-none" aria-label="Toggle Navigation">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 mt-3 px-6 py-5 flex flex-col gap-3 transition-all duration-300 animate-fadeIn">
+            <a href="#home" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Home</a>
+            <a href="#about" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">About Community</a>
+            <a href="#members" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Member</a>
+            <a href="#games" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Games Played</a>
+            <a href="#events" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Community Events</a>
+            <a href="#gallery" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Gallery Moments</a>
+            <a href="#timeline" class="mobile-nav-link py-2 text-base font-medium text-slate-200 hover:text-discord">Achievements</a>
+            <div class="pt-3 border-t border-white/10">
+                <a href="#join" class="mobile-nav-link flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-discord to-accentpurple text-white font-semibold rounded-xl text-center shadow-neon-blue">
+                    <i class="https://discord.gg/kzjPQTqjB"></i> Join Discord Server
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 2. HERO SECTION -->
+    <section id="home" class="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden">
+        <!-- Ambient Glowing Lights -->
+        <div class="glow-bg-1 top-20 -left-20"></div>
+        <div class="glow-bg-2 bottom-10 right-10"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:32px_32px] opacity-20 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Left Column Header Content -->
+                <div class="lg:col-span-7 flex flex-col items-start space-y-6 text-left">
+                    
+                    <!-- Tagline Label -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-discord/30 text-discord text-xs font-bold tracking-wider uppercase shadow-inner">
+                        <span class="w-2 h-2 rounded-full bg-discord animate-ping"></span>
+                        <span>WELCOME TO OUR COMMUNITY</span>
+                    </div>
+
+                    <!-- Main Heading -->
+                    <h1 class="font-heading font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] text-white">
+                        Find Your Place. <br>
+                        <span class="text-gradient">Meet New People.</span>
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
+                        DC Community adalah ruang berkumpulnya gamers, creators, dan teman diskusi dari berbagai latar belakang. Tempat terbaik untuk mabar, nongkrong santai di Voice Channel, serta merayakan momen kebersamaan tanpa batas.
+                    </p>
+
+                    <!-- CTAs Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+                        <a href="https://discord.gg/kzjPQTqjB" class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-discord to-indigo-600 hover:to-accentpurple text-white font-bold rounded-xl shadow-neon-blue hover:shadow-neon-purple transition-all duration-300 transform hover:-translate-y-1">
+                            <i class="fa-brands fa-discord text-xl"></i>
+                            <span>Join Discord Server</span>
+                        </a>
+                        <a href="#about" class="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-4 glass-panel border border-white/15 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-discord/50 transition-all duration-300">
+                            <span>Explore Community</span>
+                            <i class="fa-solid fa-arrow-right text-sm text-discord"></i>
+                        </a>
+                    </div>
+
+                    <!-- Community Live Stats Badge -->
+                    <div class="pt-8 grid grid-cols-3 gap-4 sm:gap-8 w-full border-t border-white/10 mt-4">
+                        <div class="flex flex-col">
+                            <span class="font-heading font-extrabold text-2xl sm:text-3xl text-white">2,850+</span>
+                            <span class="text-xs sm:text-sm text-slate-400 font-medium">Active Members</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-heading font-extrabold text-2xl sm:text-3xl text-discord">24/7</span>
+                            <span class="text-xs sm:text-sm text-slate-400 font-medium">Voice Lounge</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-heading font-extrabold text-2xl sm:text-3xl text-accentpurple">150+</span>
+                            <span class="text-xs sm:text-sm text-slate-400 font-medium">Events Hosted</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column Showcase Frame -->
+                <div class="lg:col-span-5 relative flex items-center justify-center">
+                    
+                    <!-- Outer Decorative Neon Rings -->
+                    <div class="absolute w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] rounded-full border border-discord/20 animate-spin-slow pointer-events-none"></div>
+                    <div class="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full border border-dashed border-accentpurple/30 pointer-events-none"></div>
+
+                    <!-- Main Glowing Emblem Frame with Floating Animation -->
+                    <div class="relative w-full max-w-[380px] sm:max-w-[420px] animate-float">
+                        <div class="relative rounded-3xl p-1 bg-gradient-to-b from-discord via-accentpurple to-transparent shadow-neon-glow overflow-hidden">
+                            <div class="glass-panel p-6 rounded-[22px] flex flex-col items-center text-center relative z-10">
+                                
+                                <!-- Floating Top Discord Online Badge -->
+                                <div class="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>540 Online Now</span>
+                                </div>
+
+                                <!-- Emblem Mascot Graphic -->
+                                <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-tr from-indigo-900 to-darkbg p-1 my-4 border border-discord/30 flex items-center justify-center relative group">
+                                    <div class="absolute inset-0 rounded-2xl bg-discord/20 blur-xl group-hover:bg-discord/40 transition-all duration-300"></div>
+                                    <i class="fa-solid fa-headset text-6xl text-discord group-hover:scale-110 transition-transform duration-300"></i>
+                                </div>
+
+                                <h3 class="font-heading font-bold text-2xl text-white mt-2">DC COMMUNITY</h3>
+                                <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-semibold">Indonesia Discord Hub</p>
+
+                                <!-- Mini Server Highlights Cards inside Frame -->
+                                <div class="w-full grid grid-cols-2 gap-3 mt-6 pt-6 border-t border-white/10 text-left">
+                                    <div class="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-discord/20 text-discord flex items-center justify-center">
+                                            <i class="fa-solid fa-gamepad text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-slate-400">Weekly</div>
+                                            <div class="text-xs font-bold text-white">Tournaments</div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-accentpurple/20 text-accentpurple flex items-center justify-center">
+                                            <i class="fa-solid fa-microphone text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-slate-400">Podcast &</div>
+                                            <div class="text-xs font-bold text-white">Nongkrong</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 3. ABOUT COMMUNITY SECTION -->
+    <section id="about" class="py-24 relative z-10 bg-darkbg/80 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-discord font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-discord/10 border border-discord/20">About DC Community</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-4">
+                    Lebih Dari Sekadar Server Discord Biasa
+                </h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-3">
+                    DC Community didirikan dengan visi menciptakan lingkungan virtual yang positif, suportif, dan menyenangkan bagi siapa saja yang ingin mencari teman sepermainan maupun teman cerita.
+                </p>
+            </div>
+
+            <!-- About Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-discord/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-discord to-indigo-700 flex items-center justify-center text-white text-xl mb-5 shadow-neon-blue group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-white mb-2">Komunitas Ramah</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Anggota yang suportif dan siap menyambut member baru tanpa membeda-bedakan level game atau latar belakang.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-accentpurple/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accentpurple to-pink-600 flex items-center justify-center text-white text-xl mb-5 shadow-neon-purple group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-white mb-2">Turnamen Internal</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Ajang kompetisi seru antar member berhadiah Role Eksklusif, Discord Nitro, hingga prize pool menarik.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-discord/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xl mb-5 shadow-neon-blue group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-white mb-2">Voice Active 24/7</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Voice Channel selalu hidup setiap hari. Tempat nyaman untuk dengerin musik, curhat, atau sekadar podcast malam.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-accentpurple/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white text-xl mb-5 shadow-neon-purple group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-white mb-2">Moderasi Aman</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Tim Staff dan Moderator yang sigap menjaga suasana server tetap kondusif, aman dari toxic, dan ramah gender.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 4. MEMBERS SECTION (Horizontal Automatic Carousel) -->
+    <section id="members" class="py-24 relative overflow-hidden bg-cardbg/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="text-discord font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-discord/10 border border-discord/20">Active Roster</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">
+                    Meet Our Key Members & Squad
+                </h2>
+                <p class="text-slate-400 text-sm mt-1">Arahkan kursor ke card untuk menghentikan animasi carousel.</p>
+            </div>
+            
+            <button onclick="openAllMembersModal()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-discord/20 hover:bg-discord border border-discord/40 text-white font-semibold text-sm transition-all duration-300">
+                <i class="fa-solid fa-address-book"></i>
+                <span>View Members</span>
+            </button>
+        </div>
+
+        <!-- Infinite Scroll Member Marquee Container -->
+        <div class="marquee-container w-full overflow-hidden py-4">
+            <div id="members-marquee" class="marquee-content flex gap-6 w-max animate-marquee">
+                <!-- Dynamically Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 6. GAMES SECTION -->
+    <section id="games" class="py-24 relative z-10 bg-darkbg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accentpurple font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-accentpurple/10 border border-accentpurple/20">Game Hub</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">
+                    Games We Frequently Play
+                </h2>
+                <p class="text-slate-400 text-sm mt-2">
+                    Dari game FPS taktis hingga Sandbox RPG, kami selalu punya party untuk diajak mabar setiap harinya.
+                </p>
+            </div>
+
+            <!-- Games Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Game Card 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Valorant" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            42 Active Party
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">VALORANT</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Competitive Ranked Push, Custom lobby 5v5 internal server, hingga turnamen Valorant antar member rutin.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Game Card 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Genshin Impact" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            28 Online Co-Op
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">Genshin Impact</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Diskusi Lore Teyvat, Co-Op farm domain / boss, sharing build karakter, dan live gacha bareng di VC.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Game Card 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=800&q=80" alt="Minecraft" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Private Dedicated SMP
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">Minecraft Dedicated SMP</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Server Survival Multiplayer khusus komunitas DC Community. Bangun megastructure bersama anggota lain.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Game Card 4 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80" alt="Apex Legends" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            18 Active Trio
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">Apex Legends</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Fast-paced Battle Royale squad push Predator/Master rank dengan komunikasi voice jernih dan terkoordinasi.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Game Card 5 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?auto=format&fit=crop&w=800&q=80" alt="Mobile Legends" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            35 Mobile Gamers
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">Mobile Legends</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Mabar kumpul 5-man Mythical Glory, custom room fun match, hingga turnamen MLBB internal bulanan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Game Card 6 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-discord/60 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80" alt="GTA V Roleplay" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-cardbg/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 backdrop-blur-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Squad Faction RP
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-2xl text-white group-hover:text-discord transition-colors">GTA V Roleplay</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Eksplorasi cerita Roleplay di server lokal bersama geng/faksi internal DC Community.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 7. EVENTS SECTION -->
+    <section id="events" class="py-24 relative bg-cardbg/30 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16">
+                <div>
+                    <span class="text-discord font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-discord/10 border border-discord/20">Schedule</span>
+                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">
+                        Upcoming Community Events
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1">Jangan lewatkan keseruan agenda mabar dan gathering mingguan kami.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Event Card 1 -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-discord/50 transition-all duration-300 relative group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-discord/20 text-discord text-xs font-bold">Internal Tournament</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> Sabtu, 20:00 WIB</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white group-hover:text-discord transition-colors">Valorant 5v5 Championship S3</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Ajang pembuktian squad terkuat server dengan total hadiah Discord Nitro 3 Bulan & Custom Role Trophy.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <img src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=33" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=47" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                        </div>
+                        <button onclick="rsvpAlert('Valorant 5v5 Championship S3')" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-discord text-white text-xs font-bold border border-white/10 transition-all duration-300">
+                            RSVP Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-accentpurple/50 transition-all duration-300 relative group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-accentpurple/20 text-accentpurple text-xs font-bold">Nongkrong Bareng</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> Malam Minggu</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white group-hover:text-accentpurple transition-colors">Night Podcast & Live Music</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Sesi ngobrol santai bersama member, kuis tebak lagu, serta penampilan karaoke live di Voice Channel Utama.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <img src="https://i.pravatar.cc/100?img=60" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=5" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=18" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                        </div>
+                        <button onclick="rsvpAlert('Night Podcast & Live Music')" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-accentpurple text-white text-xs font-bold border border-white/10 transition-all duration-300">
+                            RSVP Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-discord/50 transition-all duration-300 relative group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold">Gathering Offline</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> Akhir Bulan</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white group-hover:text-emerald-400 transition-colors">Offline Meetup & Dinner</h3>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            Kumpul tatap muka untuk member regional Jakarta & Surabaya. Makan bareng, bagi souvenir, dan kuis berhadiah.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <img src="https://i.pravatar.cc/100?img=68" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=15" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                            <img src="https://i.pravatar.cc/100?img=22" class="w-8 h-8 rounded-full border-2 border-darkbg">
+                        </div>
+                        <button onclick="rsvpAlert('Offline Meetup & Dinner')" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-emerald-500 text-white text-xs font-bold border border-white/10 transition-all duration-300">
+                            RSVP Event
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 8. GALLERY SECTION — COMMUNITY MOMENTS (WITH MANDATORY CONNECTORS & STRUCTURE) -->
+    <section id="gallery" class="py-24 relative z-10 bg-darkbg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-discord font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-discord/10 border border-discord/20">Community Moments</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">
+                    Dokumentasi Kebersamaan
+                </h2>
+                <p class="text-slate-400 text-sm mt-2">Pilih kategori momen untuk melihat kilas balik kebersamaan kami.</p>
+            </div>
+
+            <!-- Moment Category Tab Selectors -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+                <button onclick="switchGalleryTab(0)" id="gallery-tab-0" class="gallery-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 bg-gradient-to-r from-discord to-accentpurple text-white shadow-neon-blue">
+                    NONGKRONG BARENG
+                </button>
+                <button onclick="switchGalleryTab(1)" id="gallery-tab-1" class="gallery-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 glass-panel border border-white/10 text-slate-300 hover:text-white">
+                    TOURNAMENT FINALS
+                </button>
+                <button onclick="switchGalleryTab(2)" id="gallery-tab-2" class="gallery-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 glass-panel border border-white/10 text-slate-300 hover:text-white">
+                    ANNIVERSARY PARTY
+                </button>
+            </div>
+
+            <!-- GALLERY DISPLAY CONTAINER -->
+            <div class="relative w-full max-w-4xl mx-auto">
+                
+                <!-- SVG CONNECTOR LINES CONTAINER -->
+                <!-- Strictly solid curved glowing lines connecting the bottom center of the main photo to top of sub photos with arrowheads -->
+                <svg class="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-20" preserveAspectRatio="none" viewBox="0 0 1000 700">
+                    <defs>
+                        <!-- Neon Gradient for Connectors -->
+                        <linearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5865f2" />
+                            <stop offset="100%" stop-color="#8b5cf6" />
+                        </linearGradient>
+
+                        <!-- Solid Arrowhead Left -->
+                        <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#8b5cf6" />
+                        </marker>
+                    </defs>
+
+                    <!-- Left Curved Connector Line (Solid, Glowing) -->
+                    <path d="M 500 320 C 500 390, 250 370, 250 450" 
+                          fill="none" 
+                          stroke="url(#connectorGradient)" 
+                          stroke-width="3" 
+                          stroke-linecap="round"
+                          marker-end="url(#arrowhead)"
+                          style="filter: drop-shadow(0px 0px 8px rgba(139, 92, 246, 0.8));" />
+
+                    <!-- Right Curved Connector Line (Solid, Glowing) -->
+                    <path d="M 500 320 C 500 390, 750 370, 750 450" 
+                          fill="none" 
+                          stroke="url(#connectorGradient)" 
+                          stroke-width="3" 
+                          stroke-linecap="round"
+                          marker-end="url(#arrowhead)"
+                          style="filter: drop-shadow(0px 0px 8px rgba(88, 101, 242, 0.8));" />
+                </svg>
+
+                <div id="gallery-display" class="flex flex-col items-center gap-10 relative z-10 transition-opacity duration-300">
+                    
+                    <!-- 1. MAIN FEATURED PHOTO (Landscape / Rectangle) -->
+                    <div class="w-full relative group">
+                        
+                        <!-- Title Overlay strictly on top of main photo -->
+                        <div class="absolute top-4 left-4 z-20">
+                            <span id="gallery-main-title" class="px-5 py-2.5 rounded-xl bg-darkbg/80 backdrop-blur-md border border-white/20 font-heading font-black text-lg sm:text-xl text-white tracking-wider shadow-lg uppercase">
+                                NONGKRONG BARENG
+                            </span>
+                        </div>
+
+                        <!-- Main Image Container -->
+                        <div class="relative w-full h-[280px] sm:h-[380px] lg:h-[420px] rounded-2xl overflow-hidden p-1 bg-gradient-to-r from-discord via-indigo-500 to-accentpurple shadow-neon-glow transition-transform duration-500 hover:scale-[1.01] cursor-pointer" onclick="openLightbox(currentMainImgUrl)">
+                            <img id="gallery-main-img" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80" alt="Main Gallery Moment" class="w-full h-full object-cover rounded-[14px] group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkbg/80 via-transparent to-transparent opacity-60"></div>
+                            
+                            <!-- Hover View Indicator -->
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-darkbg/40 backdrop-blur-xs">
+                                <span class="px-4 py-2 rounded-xl bg-discord text-white font-bold text-xs flex items-center gap-2 shadow-neon-blue">
+                                    <i class="fa-solid fa-expand"></i> Click to Enlarge
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. TWO SUPPORTING PHOTOS BELOW (Left & Right) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-24 w-full pt-4">
+                        
+                        <!-- Supporting Photo Left -->
+                        <div class="relative group cursor-pointer" onclick="openLightbox(currentSubImgLeftUrl)">
+                            <div class="w-full h-[200px] sm:h-[230px] rounded-2xl p-0.5 bg-gradient-to-br from-discord to-slate-700 shadow-md hover:shadow-neon-blue transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                                <img id="gallery-sub-left" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=600&q=80" alt="Sub Moment Left" class="w-full h-full object-cover rounded-[14px] group-hover:scale-110 transition-transform duration-500">
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span id="gallery-sub-left-title" class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Meetup Voice Lounge</span>
+                            </div>
+                        </div>
+
+                        <!-- Supporting Photo Right -->
+                        <div class="relative group cursor-pointer" onclick="openLightbox(currentSubImgRightUrl)">
+                            <div class="w-full h-[200px] sm:h-[230px] rounded-2xl p-0.5 bg-gradient-to-br from-accentpurple to-slate-700 shadow-md hover:shadow-neon-purple transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                                <img id="gallery-sub-right" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Sub Moment Right" class="w-full h-full object-cover rounded-[14px] group-hover:scale-110 transition-transform duration-500">
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span id="gallery-sub-right-title" class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Fun Mini Games Session</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 9. ACHIEVEMENTS / COMMUNITY TIMELINE SECTION -->
+    <section id="timeline" class="py-24 relative bg-cardbg/20 border-t border-white/5">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accentpurple font-bold text-xs tracking-widest uppercase px-3 py-1 rounded-full bg-accentpurple/10 border border-accentpurple/20">Our Journey</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">
+                    Milestones & Achievements
+                </h2>
+                <p class="text-slate-400 text-sm mt-2">Perjalanan berkesan DC Community dari awal berdiri hingga saat ini.</p>
+            </div>
+
+            <!-- Timeline Items -->
+            <div class="relative border-l-2 border-discord/30 md:border-none space-y-12 ml-4 md:ml-0">
+                
+                <!-- Center Line for Desktop -->
+                <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -ml-0.5 w-1 bg-gradient-to-b from-discord via-accentpurple to-transparent"></div>
+
+                <!-- Item 1 -->
+                <div class="relative flex flex-col md:flex-row items-center group">
+                    <div class="flex items-center justify-start md:justify-end w-full md:w-1/2 md:pr-12 pl-6 md:pl-0">
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-discord/50 transition-all duration-300 w-full md:max-w-md">
+                            <span class="text-xs font-bold text-discord">JANUARI 2024</span>
+                            <h3 class="font-heading font-bold text-lg text-white mt-1">DC Community Resmi Didirikan</h3>
+                            <p class="text-slate-400 text-sm mt-2">Diawali dari 10 orang sahabat dekat yang hobi mabar Valorant hingga sepakat membuka server untuk publik.</p>
+                        </div>
+                    </div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-4 w-8 h-8 rounded-full bg-discord p-1 shadow-neon-blue flex items-center justify-center text-white text-xs z-10">
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative flex flex-col md:flex-row items-center group">
+                    <div class="hidden md:block w-1/2"></div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-4 w-8 h-8 rounded-full bg-accentpurple p-1 shadow-neon-purple flex items-center justify-center text-white text-xs z-10">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="flex items-center justify-start w-full md:w-1/2 md:pl-12 pl-6">
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-accentpurple/50 transition-all duration-300 w-full md:max-w-md">
+                            <span class="text-xs font-bold text-accentpurple">AGUSTUS 2024</span>
+                            <h3 class="font-heading font-bold text-lg text-white mt-1">Pencapaian 1,000 Member Active</h3>
+                            <p class="text-slate-400 text-sm mt-2">Server berhasil menembus 1.000 anggota aktif dan mendapatkan status Discord Community Partner Badge.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative flex flex-col md:flex-row items-center group">
+                    <div class="flex items-center justify-start md:justify-end w-full md:w-1/2 md:pr-12 pl-6 md:pl-0">
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-discord/50 transition-all duration-300 w-full md:max-w-md">
+                            <span class="text-xs font-bold text-discord">MEI 2025</span>
+                            <h3 class="font-heading font-bold text-lg text-white mt-1">Giga Regional Offline Gathering</h3>
+                            <p class="text-slate-400 text-sm mt-2">Gathering perdana secara tatap muka yang dihadiri lebih dari 80 member dari berbagai kota.</p>
+                        </div>
+                    </div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-4 w-8 h-8 rounded-full bg-discord p-1 shadow-neon-blue flex items-center justify-center text-white text-xs z-10">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="relative flex flex-col md:flex-row items-center group">
+                    <div class="hidden md:block w-1/2"></div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-4 w-8 h-8 rounded-full bg-emerald-500 p-1 shadow-neon-purple flex items-center justify-center text-white text-xs z-10">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="flex items-center justify-start w-full md:w-1/2 md:pl-12 pl-6">
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10 hover:border-emerald-500/50 transition-all duration-300 w-full md:max-w-md">
+                            <span class="text-xs font-bold text-emerald-400">2026 — NOW</span>
+                            <h3 class="font-heading font-bold text-lg text-white mt-1">2,800+ Active Members & Level 3 Boost</h3>
+                            <p class="text-slate-400 text-sm mt-2">Menjadi salah satu hub komunitas Discord teraktif dengan kualitas audio HD 384kbps & custom emotes.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 10. JOIN DISCORD SECTION -->
+    <section id="join" class="py-20 relative overflow-hidden bg-darkbg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="relative rounded-3xl p-8 sm:p-14 overflow-hidden border border-discord/30 bg-gradient-to-r from-cardbg via-indigo-950/80 to-cardbg shadow-neon-glow">
+                
+                <div class="glow-bg-1 -top-10 -right-10"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8 space-y-4">
+                        <span class="px-3 py-1 rounded-full bg-discord/20 text-discord text-xs font-bold uppercase tracking-wider">Join The Family</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-5xl text-white leading-tight">
+                            Tunggu Apa Lagi? <br>
+                            <span class="text-gradient-discord">Bergabunglah Sekarang!</span>
+                        </h2>
+                        <p class="text-slate-300 text-base max-w-xl">
+                            Temukan teman mabar baru, masuk ke voice channel yang ramah, dan jadilah bagian dari perjalanan seru kami di DC Community.
+                        </p>
+                        <div class="pt-4 flex flex-wrap gap-4 items-center">
+                            <a href="https://discord.gg" target="_blank" class="px-8 py-4 rounded-xl bg-discord hover:bg-discordhover text-white font-bold text-base flex items-center gap-3 shadow-neon-blue transition-all duration-300 hover:scale-105">
+                                <i class="fa-brands fa-discord text-2xl"></i>
+                                <span>Join Our Discord</span>
+                            </a>
+                            <button onclick="copyInviteLink()" class="px-6 py-4 rounded-xl glass-panel border border-white/15 text-white font-semibold text-sm hover:bg-white/10 transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i>
+                                <span id="copy-btn-text">Copy Invite Link</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 flex justify-center">
+                        <div class="relative w-48 h-48 rounded-full bg-gradient-to-tr from-discord to-accentpurple p-1 shadow-neon-glow animate-pulse-glow flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-darkbg flex flex-col items-center justify-center text-center p-4">
+                                <i class="fa-brands fa-discord text-6xl text-discord mb-2"></i>
+                                <span class="text-white font-extrabold text-sm">DC COMMUNITY</span>
+                                <span class="text-emerald-400 text-xs font-medium"><i class="fa-solid fa-circle text-[8px] animate-ping"></i> Instant Access</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 11. FOOTER -->
+    <footer class="bg-cardbg border-t border-white/10 pt-16 pb-8 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                
+                <div class="space-y-4 md:col-span-1">
+                    <a href="#home" class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-discord flex items-center justify-center text-white">
+                            <i class="fa-brands fa-discord"></i>
+                        </div>
+                        <span class="font-heading font-extrabold text-lg text-white">DC COMMUNITY</span>
+                    </a>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Wadah utama para gamer dan kreator Indonesia untuk berkumpul, mabar, dan bertukar cerita secara positif.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4">Navigasi Cepat</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#home" class="hover:text-discord transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-discord transition-colors">About Us</a></li>
+                        <li><a href="#members" class="hover:text-discord transition-colors">Members Roster</a></li>
+                        <li><a href="#games" class="hover:text-discord transition-colors">Games Hub</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4">Komunitas</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#events" class="hover:text-discord transition-colors">Event Schedule</a></li>
+                        <li><a href="#gallery" class="hover:text-discord transition-colors">Gallery Moments</a></li>
+                        <li><a href="#timeline" class="hover:text-discord transition-colors">Achievements</a></li>
+                        <li><a href="#join" class="hover:text-discord transition-colors">Join Discord</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4">Social Media & Links</h4>
+                    <div class="flex items-center gap-3 mb-4">
+                        <a href="#" class="w-9 h-9 rounded-xl glass-panel border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-discord transition-all">
+                            <i class="fa-brands fa-instagram text-base"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl glass-panel border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-discord transition-all">
+                            <i class="fa-brands fa-youtube text-base"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl glass-panel border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-discord transition-all">
+                            <i class="fa-brands fa-tiktok text-base"></i>
+                        </a>
+                    </div>
+                    <div class="text-xs text-emerald-400 font-medium flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>Discord Voice Bitrate: 384 kbps</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 DC Community. All rights reserved.</p>
+                <p>Designed for Modern Discord Communities.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- 5. MEMBER PROFILE MODAL & ALL MEMBERS MODAL -->
+    
+    <!-- Modal 1: Member Profile Modal -->
+    <div id="member-profile-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-darkbg/80 backdrop-blur-md animate-fadeIn">
+        <div class="relative w-full max-w-2xl glass-panel rounded-3xl border border-white/15 overflow-hidden shadow-neon-glow">
+            
+            <!-- Modal Close Button -->
+            <button onclick="closeMemberProfileModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-darkbg/60 text-slate-300 hover:text-white flex items-center justify-center border border-white/10 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Banner Header -->
+            <div id="modal-banner" class="h-36 sm:h-44 w-full bg-cover bg-center relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-cardbg via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Profile Info Body -->
+            <div class="px-6 sm:px-8 pb-8 -mt-14 relative z-10">
+                <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+                    
+                    <!-- Avatar with Neon Glow Border -->
+                    <div class="relative">
+                        <img id="modal-avatar" src="" alt="Member Avatar" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-discord shadow-neon-blue">
+                        <span class="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-cardbg"></span>
+                    </div>
+
+                    <!-- Discord Role Badge -->
+                    <div id="modal-role-badge" class="px-4 py-1.5 rounded-full bg-discord/20 border border-discord/40 text-discord font-bold text-xs">
+                        ROLE NAME
+                    </div>
+                </div>
+
+                <!-- Name & Tags -->
+                <div class="mt-4">
+                    <h3 id="modal-display-name" class="font-heading font-black text-2xl text-white">Display Name</h3>
+                    <div id="modal-username" class="text-sm text-slate-400 font-mono">@username</div>
+                </div>
+
+                <!-- Bio -->
+                <p id="modal-bio" class="text-slate-300 text-sm mt-3 leading-relaxed">Member bio content goes here...</p>
+
+                <!-- Profile Details Grid -->
+                <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/10 text-xs">
+                    <div>
+                        <span class="text-slate-400 block mb-1">Game Favorit:</span>
+                        <div id="modal-fav-games" class="flex flex-wrap gap-1.5">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block mb-1">Bergabung Sejak:</span>
+                        <span id="modal-joined" class="font-semibold text-white">Januari 2024</span>
+                    </div>
+                </div>
+
+                <!-- Personal Gallery Highlights -->
+                <div class="mt-6">
+                    <span class="text-slate-400 text-xs block mb-2">Moments & Highlights:</span>
+                    <div id="modal-gallery" class="grid grid-cols-3 gap-3">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Back Action -->
+                <div class="mt-8 flex justify-end">
+                    <button onclick="closeMemberProfileModal()" class="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Members
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal 2: All Members Full Grid Modal -->
+    <div id="all-members-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-darkbg/90 backdrop-blur-lg animate-fadeIn">
+        <div class="relative w-full max-w-5xl h-[85vh] glass-panel rounded-3xl border border-white/15 p-6 sm:p-8 flex flex-col shadow-2xl">
+            
+            <div class="flex items-center justify-between pb-6 border-b border-white/10">
+                <div>
+                    <h3 class="font-heading font-extrabold text-2xl text-white">All Community Members</h3>
+                    <p class="text-xs text-slate-400">Klik salah satu member untuk melihat profil lengkap.</p>
+                </div>
+                <button onclick="closeAllMembersModal()" class="w-10 h-10 rounded-full bg-white/5 text-slate-300 hover:text-white flex items-center justify-center border border-white/10">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Members Grid Scrollable Area -->
+            <div id="all-members-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 py-6 overflow-y-auto flex-1 pr-2">
+                <!-- Dynamically populated by JavaScript -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal 3: Gallery Lightbox Image Popup -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-darkbg/95 backdrop-blur-md" onclick="closeLightbox()">
+        <div class="relative max-w-4xl max-h-[90vh]">
+            <img id="lightbox-img" src="" alt="Enlarged Moment" class="max-w-full max-h-[85vh] rounded-2xl border border-white/20 shadow-2xl object-contain">
+            <button class="absolute -top-12 right-0 text-white text-xl p-2"><i class="fa-solid fa-xmark"></i> Close</button>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const MEMBERS_DATA = [
+            {
+                id: '1',
+                name: 'Alex "Aether" Vance',
+                username: 'aether_dc',
+                role: 'Founder & Guild Leader',
+                roleColor: 'bg-gradient-to-r from-amber-500 to-orange-600 text-white',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+                bio: 'Founder DC Community. Gamer FPS veteran, streamer santai, dan penikmat kopi hitam saat begadang voice channel.',
+                favGames: ['Valorant', 'Apex Legends', 'Cyberpunk 2077'],
+                joined: '10 Januari 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80'
+                ]
+            },
+            {
+                id: '2',
+                name: 'Siti "Valkyrie" Nur',
+                username: 'valkyrie_siti',
+                role: 'Head Moderator',
+                roleColor: 'bg-discord text-white',
+                avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
+                bio: 'Menjaga kenyamanan server dari spam & toxic. Suka bgt Genshin Impact & kuis trivia mingguan.',
+                favGames: ['Genshin Impact', 'Honkai Star Rail', 'Valorant'],
+                joined: '15 Januari 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80'
+                ]
+            },
+            {
+                id: '3',
+                name: 'Budi "PixelMaster"',
+                username: 'budi_pixel',
+                role: 'Minecraft Admin',
+                roleColor: 'bg-emerald-600 text-white',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=800&q=80',
+                bio: 'Penanggung jawab server Minecraft Survival DC Community. Builder gila yang suka bikin castle megah.',
+                favGames: ['Minecraft', 'Terraria', 'Stardew Valley'],
+                joined: '01 Februari 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1627856013091-fed6e4e30025?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80'
+                ]
+            },
+            {
+                id: '4',
+                name: 'Clara "Luna" Sastro',
+                username: 'luna_sing',
+                role: 'Event Manager',
+                roleColor: 'bg-accentpurple text-white',
+                avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80',
+                bio: 'Host Podcast & Karaoke Night. Selalu punya ide acara seru setiap malam minggu!',
+                favGames: ['Overwatch 2', 'Mobile Legends', 'Phasmophobia'],
+                joined: '20 Februari 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80'
+                ]
+            },
+            {
+                id: '5',
+                name: 'Kevin "Riptide"',
+                username: 'kevin_rip',
+                role: 'Pro Gamer VIP',
+                roleColor: 'bg-cyan-600 text-white',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80',
+                bio: 'Radiant Valorant Peak. Siap carry temen-temen member DC Community kapan aja!',
+                favGames: ['Valorant', 'CS:GO 2', 'Apex Legends'],
+                joined: '12 Maret 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80'
+                ]
+            },
+            {
+                id: '6',
+                name: 'Nadia "CyberCat"',
+                username: 'nadia_cat',
+                role: 'Content Creator',
+                roleColor: 'bg-pink-600 text-white',
+                avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80',
+                banner: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
+                bio: 'Streamer Twitch & TikTok Creator. Suka mengabadikan klip lucu kebersamaan member server.',
+                favGames: ['GTA V RP', 'Dead by Daylight', 'Among Us'],
+                joined: '05 April 2024',
+                gallery: [
+                    'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80',
+                    'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80'
+                ]
+            }
+        ];
+
+        const GALLERY_MOMENTS = [
+            {
+                category: 'NONGKRONG BARENG',
+                mainTitle: 'NONGKRONG BARENG',
+                mainImg: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80',
+                subLeftImg: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=600&q=80',
+                subLeftTitle: 'Meetup Voice Lounge',
+                subRightImg: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80',
+                subRightTitle: 'Fun Mini Games Session'
+            },
+            {
+                category: 'TOURNAMENT FINALS',
+                mainTitle: 'TOURNAMENT FINALS S2',
+                mainImg: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
+                subLeftImg: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80',
+                subLeftTitle: 'Final Match 5v5',
+                subRightImg: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80',
+                subRightTitle: 'Trophy Celebration'
+            },
+            {
+                category: 'ANNIVERSARY PARTY',
+                mainTitle: '1st ANNIVERSARY PARTY',
+                mainImg: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80',
+                subLeftImg: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+                subLeftTitle: 'Live Music & DJ',
+                subRightImg: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+                subRightTitle: 'Giveaway Nitro Session'
+            }
+        ];
+
+        let currentMainImgUrl = '';
+        let currentSubImgLeftUrl = '';
+        let currentSubImgRightUrl = '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavbarScroll();
+            initMobileMenu();
+            renderMembersMarquee();
+            renderAllMembersGrid();
+            switchGalleryTab(0);
+        });
+
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('py-3', 'shadow-xl', 'border-b', 'border-white/10');
+                    navbar.classList.remove('py-4');
+                } else {
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-3', 'shadow-xl');
+                }
+            });
+        }
+
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const links = document.querySelectorAll('.mobile-nav-link');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        function renderMembersMarquee() {
+            const marquee = document.getElementById('members-marquee');
+            // Duplicate array twice for seamless continuous infinite marquee
+            const doubleMembers = [...MEMBERS_DATA, ...MEMBERS_DATA];
+            
+            marquee.innerHTML = doubleMembers.map(member => `
+                <div onclick="openMemberProfileModal('${member.id}')" class="glass-panel w-64 p-5 rounded-2xl border border-white/10 hover:border-discord transition-all duration-300 hover:scale-105 cursor-pointer flex flex-col items-center text-center group">
+                    <div class="relative mb-3">
+                        <img src="${member.avatar}" alt="${member.name}" class="w-20 h-20 rounded-full object-cover border-2 border-discord p-0.5 shadow-neon-blue group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-emerald-500 border-2 border-darkbg"></span>
+                    </div>
+                    <h4 class="font-heading font-bold text-white text-base group-hover:text-discord transition-colors">${member.name}</h4>
+                    <span class="text-xs text-slate-400 font-mono mt-0.5">@${member.username}</span>
+                    <span class="mt-3 text-[11px] px-3 py-1 rounded-full ${member.roleColor} font-semibold shadow-xs">
+                        ${member.role}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function renderAllMembersGrid() {
+            const grid = document.getElementById('all-members-grid');
+            grid.innerHTML = MEMBERS_DATA.map(member => `
+                <div onclick="openMemberProfileModal('${member.id}')" class="glass-panel p-4 rounded-2xl border border-white/10 hover:border-discord transition-all duration-300 cursor-pointer flex flex-col items-center text-center hover:-translate-y-1 group">
+                    <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full object-cover border-2 border-discord p-0.5 mb-2">
+                    <h5 class="font-heading font-bold text-white text-sm group-hover:text-discord transition-colors">${member.name}</h5>
+                    <span class="text-[11px] text-slate-400 font-mono">@${member.username}</span>
+                    <span class="mt-2 text-[10px] px-2.5 py-0.5 rounded-full ${member.roleColor} font-semibold">
+                        ${member.role}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function openMemberProfileModal(memberId) {
+            const member = MEMBERS_DATA.find(m => m.id === memberId);
+            if (!member) return;
+
+            document.getElementById('modal-banner').style.backgroundImage = `url('${member.banner}')`;
+            document.getElementById('modal-avatar').src = member.avatar;
+            document.getElementById('modal-display-name').textContent = member.name;
+            document.getElementById('modal-username').textContent = `@${member.username}`;
+            document.getElementById('modal-role-badge').textContent = member.role;
+            document.getElementById('modal-bio').textContent = member.bio;
+            document.getElementById('modal-joined').textContent = member.joined;
+
+            // Fav Games Tags
+            const favGamesContainer = document.getElementById('modal-fav-games');
+            favGamesContainer.innerHTML = member.favGames.map(g => `
+                <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-200 font-semibold">${g}</span>
+            `).join('');
+
+            // Personal Gallery
+            const galleryContainer = document.getElementById('modal-gallery');
+            galleryContainer.innerHTML = member.gallery.map(img => `
+                <img src="${img}" class="w-full h-16 sm:h-20 rounded-xl object-cover border border-white/10 hover:opacity-90 cursor-pointer" onclick="openLightbox('${img}')">
+            `).join('');
+
+            document.getElementById('all-members-modal').classList.add('hidden');
+            document.getElementById('all-members-modal').classList.remove('flex');
+
+            const profileModal = document.getElementById('member-profile-modal');
+            profileModal.classList.remove('hidden');
+            profileModal.classList.add('flex');
+        }
+
+        function closeMemberProfileModal() {
+            const modal = document.getElementById('member-profile-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openAllMembersModal() {
+            const modal = document.getElementById('all-members-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAllMembersModal() {
+            const modal = document.getElementById('all-members-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function switchGalleryTab(index) {
+            const moment = GALLERY_MOMENTS[index];
+            if (!moment) return;
+
+            // Update Tab Button Styles
+            document.querySelectorAll('.gallery-tab-btn').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.className = "gallery-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 bg-gradient-to-r from-discord to-accentpurple text-white shadow-neon-blue";
+                } else {
+                    btn.className = "gallery-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 glass-panel border border-white/10 text-slate-300 hover:text-white";
+                }
+            });
+
+            // Smooth Transition Fade Effect
+            const display = document.getElementById('gallery-display');
+            display.style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('gallery-main-title').textContent = moment.mainTitle;
+                document.getElementById('gallery-main-img').src = moment.mainImg;
+                
+                document.getElementById('gallery-sub-left').src = moment.subLeftImg;
+                document.getElementById('gallery-sub-left-title').textContent = moment.subLeftTitle;
+
+                document.getElementById('gallery-sub-right').src = moment.subRightImg;
+                document.getElementById('gallery-sub-right-title').textContent = moment.subRightTitle;
+
+                currentMainImgUrl = moment.mainImg;
+                currentSubImgLeftUrl = moment.subLeftImg;
+                currentSubImgRightUrl = moment.subRightImg;
+
+                display.style.opacity = '1';
+            }, 200);
+        }
+
+        function openLightbox(imgUrl) {
+            if (!imgUrl) return;
+            document.getElementById('lightbox-img').src = imgUrl;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+            document.getElementById('lightbox-modal').classList.add('flex');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+            document.getElementById('lightbox-modal').classList.remove('flex');
+        }
+
+        function copyInviteLink() {
+            const dummyLink = "https://discord.gg/kzjPQTqjB";
+            const tempInput = document.createElement("input");
+            tempInput.value = dummyLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            const btnText = document.getElementById('copy-btn-text');
+            btnText.textContent = "Link Copied to Clipboard!";
+            setTimeout(() => {
+                btnText.textContent = "Copy Invite Link";
+            }, 3000);
+        }
+
+        function rsvpAlert(eventName) {
+            alert(`Terima kasih! Anda telah mendaftar RSVP untuk event: ${eventName}. Pengingat akan dikirim via Discord.`);
+        }
+    </script>
+</body>
+</html>
