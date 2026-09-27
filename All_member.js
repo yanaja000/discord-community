@@ -34,7 +34,7 @@ const members = {
     epin: {
         name: "Epin",
         username: "@budi",
-        role: "Moderator",
+        role: "Desainer",
         image: "foto/profil/epin.png",
         bio: "Suka bermain game.",
         game: "Free Fire",

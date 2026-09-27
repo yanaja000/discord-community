@@ -3,7 +3,7 @@ const members = {
     alul: {
         name: "Alul",
         username: "@alul",
-        role: "Member",
+        role: "Owner",
         image: "foto/profil/admin.jpg",
         bio: "Hidup dengan prinsip: kalau masih bisa bercanda, berarti masalahnya belum terlalu serius 😭.",
         game: "Mobile Legends • Free Fire • Roblox",
@@ -33,7 +33,7 @@ const members = {
     epin: {
         name: "Epin",
         username: "@epin",
-        role: "Member",
+        role: "Desainer",
         image: "foto/profil/epin.png",
         bio: "Hidup kalo ga gini ya gitu 😏🗿.",
         game: "Mobile Legends • Free Fire • Roblox",
@@ -43,7 +43,7 @@ const members = {
      tamam: {
         name: "Tamam",
         username: "@Tamam",
-        role: "Member",
+        role: "Moderator",
         image: "foto/profil/tamam.png",
         bio: "Ahli dalam memberikan saran yang tidak pernah dia terapkan sendiri.",
         game: "Mobile Legends • Free Fire • Roblox",
