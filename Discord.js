@@ -312,21 +312,21 @@ carousel.addEventListener("mousemove", (e) => {
 
 function openEvent(event) {
 
-    if (event === "valorant") {
+    if (event === "Mobile Legends") {
 
         alert(
-            "Valorant 5v5 Championship S3\n\n" +
-            "📅 Sabtu, 20:00 WIB\n" +
-            "🎮 Valorant\n\n" +
+            "Push Rank Mobile Legends\n\n" +
+            "📅 Setiap Hari, 20:00 WIB\n" +
+            "🎮 Mobile Legends\n\n" +
             "Pendaftaran event akan segera dibuka!"
         );
 
     }
 
-    if (event === "podcast") {
+    if (event === "Nobar Film") {
 
         alert(
-            "Night Podcast & Live Music\n\n" +
+            "Nobar Film\n\n" +
             "📅 Malam Minggu\n" +
             "🎙️ Voice Channel Utama\n\n" +
             "Pendaftaran event akan segera dibuka!"
@@ -334,12 +334,12 @@ function openEvent(event) {
 
     }
 
-    if (event === "gathering") {
+    if (event === "Hangout") {
 
         alert(
-            "Offline Meetup & Dinner\n\n" +
-            "📅 Akhir Bulan\n" +
-            "📍 Jakarta & Surabaya\n\n" +
+            "Offline Hangout\n\n" +
+            "📅 Malam minggu\n" +
+            "📍 Ayani Nganjuk\n\n" +
             "Pendaftaran event akan segera dibuka!"
         );
 
