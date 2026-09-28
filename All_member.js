@@ -116,7 +116,7 @@ if (membersContainer) {
         const card = document.createElement("a");
 
         // Link menuju profil member
-        card.href = `member.html?id=${id}`;
+        card.href = `Member.html?id=${id}`;
 
         card.className = "all-member-card";
 
